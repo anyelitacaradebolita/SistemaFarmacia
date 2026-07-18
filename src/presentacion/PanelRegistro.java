@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package presentacion;
 
 /**
@@ -17,7 +18,8 @@ import java.awt.*;
 import java.sql.SQLException;
 
 /**
- * Panel para registrar y actualizar medicamentos.
+ *
+ * @author angul
  */
 public class PanelRegistro extends JPanel {
 

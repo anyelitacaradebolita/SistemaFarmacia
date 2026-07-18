@@ -19,7 +19,6 @@ import java.awt.*;
 import java.sql.SQLException;
 import java.util.List;
 
-
 public class PanelLista extends JPanel {
 
     private final JTextField txtBuscar = new JTextField(10);
