@@ -365,7 +365,7 @@ public class PanelRegistro extends JPanel {
         txtCodigo.requestFocus();
     }
 
-    // Coloca un medicamento en el formulario para editarlo.
+    // Coloca un medicamento en el formulario para editarloo.
     public void cargarRegistro(Medicamento medicamento) {
         txtCodigo.setText(
                 String.valueOf(medicamento.getCodigo())
