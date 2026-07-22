@@ -85,6 +85,7 @@ public class MedicamentoDAO {
         }
     }
 
+    
     public void eliminar(int codigo) throws SQLException {
         String sql = "DELETE FROM medicamento WHERE codigo = ?";
         try (Connection con = ConexionBD.conectar();
