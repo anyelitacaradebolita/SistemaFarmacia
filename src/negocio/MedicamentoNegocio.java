@@ -14,41 +14,141 @@ import modelo.Medicamento;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Capa de Negocio: contiene la lógica principal del sistema, incluyendo
- * las validaciones de los datos (obligatorias según el enunciado del
- * proyecto). La capa de presentación NUNCA valida directamente; siempre
- * delega en esta clase.
- */
+
 public class MedicamentoNegocio {
 
     private final MedicamentoDAO dao = new MedicamentoDAO();
 
-    /**
-     * Valida las reglas de negocio para un medicamento.
-     */
     public void validar(Medicamento m) throws ValidacionException {
+
         if (m == null) {
-            throw new ValidacionException("El medicamento no puede ser nulo.");
+            throw new ValidacionException(
+                    "El medicamento no puede ser nulo."
+            );
         }
+
         if (m.getCodigo() <= 0) {
-            throw new ValidacionException("El código debe ser un número válido mayor a 0.");
+            throw new ValidacionException(
+                    "El código debe ser mayor que 0."
+            );
         }
-        if (m.getNombre() == null || m.getNombre().trim().isEmpty()) {
-            throw new ValidacionException("El nombre del medicamento es obligatorio.");
+
+        if (m.getNombre() == null
+                || m.getNombre().trim().isEmpty()) {
+
+            throw new ValidacionException(
+                    "El nombre del medicamento es obligatorio."
+            );
         }
-        if (m.getCategoria() == null || m.getCategoria().trim().isEmpty()) {
-            throw new ValidacionException("Debe seleccionar una categoría.");
+
+        String nombre = m.getNombre().trim();
+
+        if (nombre.length() < 3) {
+            throw new ValidacionException(
+                    "El nombre debe tener al menos 3 caracteres."
+            );
         }
-        if (m.getCantidad() < 0) {
-            throw new ValidacionException("La cantidad no puede ser negativa.");
+
+        if (nombre.length() > 100) {
+            throw new ValidacionException(
+                    "El nombre no puede superar los 100 caracteres."
+            );
         }
+
+        if (nombre.matches("\\d+")) {
+            throw new ValidacionException(
+                    "El nombre no puede contener solamente números."
+            );
+        }
+
+        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 .()/-]+")) {
+            throw new ValidacionException(
+                    "El nombre contiene caracteres no permitidos."
+            );
+        }
+
+        if (m.getCategoria() == null
+                || m.getCategoria().trim().isEmpty()) {
+
+            throw new ValidacionException(
+                    "Debe seleccionar una categoría."
+            );
+        }
+
+        String categoria = m.getCategoria().trim();
+
+        if (categoria.equalsIgnoreCase("Seleccione...")
+                || categoria.equalsIgnoreCase("Seleccione una categoría")) {
+
+            throw new ValidacionException(
+                    "Debe seleccionar una categoría válida."
+            );
+        }
+
+        if (m.getCantidad() <= 0) {
+            throw new ValidacionException(
+                    "La cantidad debe ser mayor que 0."
+            );
+        }
+
+        if (m.getCantidad() > 1_000_000) {
+            throw new ValidacionException(
+                    "La cantidad ingresada es demasiado alta."
+            );
+        }
+
         if (m.getPrecio() <= 0) {
-            throw new ValidacionException("El precio debe ser mayor a 0.");
+            throw new ValidacionException(
+                    "El precio debe ser mayor que 0."
+            );
         }
-        if (m.getVencimiento() == null || m.getVencimiento().trim().isEmpty()) {
-            throw new ValidacionException("La fecha de vencimiento es obligatoria (formato yyyy-MM-dd).");
+
+        if (m.getPrecio() > 100_000_000) {
+            throw new ValidacionException(
+                    "El precio ingresado es demasiado alto."
+            );
         }
+
+        if (m.getVencimiento() == null
+                || m.getVencimiento().trim().isEmpty()) {
+
+            throw new ValidacionException(
+                    "La fecha de vencimiento es obligatoria."
+            );
+        }
+
+        String vencimientoTexto
+                = m.getVencimiento().trim();
+
+        try {
+
+            java.time.LocalDate vencimiento
+                    = java.time.LocalDate.parse(
+                            vencimientoTexto,
+                            java.time.format.DateTimeFormatter
+                                    .ofPattern("yyyy-MM-dd")
+                    );
+
+            java.time.LocalDate hoy
+                    = java.time.LocalDate.now();
+
+            if (!vencimiento.isAfter(hoy)) {
+                throw new ValidacionException(
+                        "La fecha de vencimiento debe ser posterior a hoy."
+                );
+            }
+
+        } catch (java.time.format.DateTimeParseException e) {
+
+            throw new ValidacionException(
+                    "La fecha debe tener el formato yyyy-MM-dd."
+            );
+        }
+
+        m.setNombre(nombre);
+        m.setCategoria(categoria);
+        m.setVencimiento(vencimientoTexto);
+
     }
 
     public void agregar(Medicamento m) throws ValidacionException, SQLException {
@@ -108,4 +208,3 @@ public class MedicamentoNegocio {
         }
     }
 }
-

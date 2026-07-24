@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 /**
  * Clase encargada exclusivamente de abrir la conexión JDBC hacia la base
  * de datos MySQL. Ajusta URL, USUARIO y PASSWORD según tu entorno (XAMPP,

@@ -15,7 +15,7 @@ public class Medicamento {
     private String categoria;
     private int cantidad;
     private double precio;
-    private String vencimiento;
+    private String vencimiento; // formato esperado: yyyy-MM-dd
 
     public Medicamento() {
     }
@@ -90,4 +90,3 @@ public class Medicamento {
                 '}';
     }
 }
-

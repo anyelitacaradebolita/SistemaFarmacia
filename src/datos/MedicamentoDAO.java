@@ -19,11 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Capa de Datos: acceso directo a la base de datos mediante JDBC.
- * Contiene únicamente sentencias SQL, PreparedStatement y ResultSet.
- * No contiene validaciones de negocio.
- */
+
 public class MedicamentoDAO {
 
     public void agregar(Medicamento m) throws SQLException {
