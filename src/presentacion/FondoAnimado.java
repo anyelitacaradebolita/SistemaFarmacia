@@ -17,7 +17,7 @@ import javax.swing.Timer;
  *
  * @author Daryelin
  */
-public class FondoAnimado {
+public class FondoAnimado extends JPanel{
      private final Timer temporizador;
 
     private double desplazamiento = 0.0;

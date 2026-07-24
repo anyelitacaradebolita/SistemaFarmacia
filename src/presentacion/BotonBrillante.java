@@ -20,7 +20,7 @@ import javax.swing.JButton;
  *
  * @author Daryelin
  */
-public class BotonBrillante {
+public class BotonBrillante extends JButton{
      private Color colorBase
             = TemaFarmacia.TURQUESA_PRINCIPAL;
 
